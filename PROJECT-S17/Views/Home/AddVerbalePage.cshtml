@@ -49,11 +49,6 @@
 					<input id="codfisc" asp-for="Verbale.Anagrafica.CodFisc" class="form-control" />
 					<span class="text-danger" asp-validation-for="Verbale.Anagrafica.CodFisc"></span>
 				</div>
-
-				<div class="m-2 text-end">
-					<button class="btn btn-sm btn-success" type="submit">Salva Dati</button>
-					<button class="btn btn-sm btn-warning" type="reset">Reset</button>
-				</div>
 			</div>
 		</div>
 		<div>
@@ -73,7 +68,6 @@
 
 				<div class="formGroup">
 					<label for="violazione" asp-for="Verbale.Violazione.Descrizione" class="form-label"></label>
-					@* <input id="violazione" asp-for="Verbale.Violazione.Descrizione" class="form-control" type="number" /> *@
 					<select asp-for="Verbale.Violazione.Idviolazione" asp-items="@(new SelectList(violazioni, "Idviolazione", "Descrizione" ))"></select>
 					<span class="text-danger" asp-validation-for="Verbale.Violazione.Descrizione"></span>
 				</div>
@@ -98,7 +92,7 @@
 
 				<div class="formGroup">
 					<label for="decurtamento" asp-for="Verbale.DecurtamentoPunti" class="form-label"></label>
-					<input id="decurtamento" asp-for="Verbale.DecurtamentoPunti" type="number" />
+					<input id="decurtamento" asp-for="Verbale.DecurtamentoPunti" type="number" class="form-control" />
 					<span class="text-danger" asp-validation-for="Verbale.DecurtamentoPunti"></span>
 				</div>
 
@@ -117,3 +111,7 @@
 	</form>
 </div>
 
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

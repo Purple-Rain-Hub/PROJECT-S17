@@ -46,6 +46,7 @@ namespace PROJECT_S17.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveVerbale(AddVerbaleViewModel addVerbaleViewModel)
         {
+            ModelState.Remove("Verbale.Violazione.Descrizione");
             if (!ModelState.IsValid)
             {
                 TempData["Error"] = "Errore nel modello del form";
