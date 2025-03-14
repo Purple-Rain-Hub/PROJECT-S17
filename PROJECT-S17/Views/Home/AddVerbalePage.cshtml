@@ -1,0 +1,115 @@
+﻿@model AddVerbaleViewModel
+@{
+	ViewData["Title"] = "Aggiungi Verbale";
+	var violazioni = ViewData["Violazioni"] as List<Violazione>;
+}
+
+<div class="container">
+	<h1>Aggiungi un verbale</h1>
+	<form method="post" asp-controller="Home" asp-action="SaveVerbale">
+		<div>
+			<h2>Dati Anagrafici</h2>
+			<div>
+				<div class="formGroup">
+					<label for="nome" asp-for="Verbale.Anagrafica.Nome" class="form-label"></label>
+					<input id="nome" asp-for="Verbale.Anagrafica.Nome" class="form-control" />
+					<span class="text-danger" asp-validation-for="Verbale.Anagrafica.Nome"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="cognome" asp-for="Verbale.Anagrafica.Cognome" class="form-label"></label>
+					<input id="cognome" asp-for="Verbale.Anagrafica.Cognome" class="form-control" />
+					<span class="text-danger" asp-validation-for="Verbale.Anagrafica.Cognome"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="indirizzo" asp-for="Verbale.Anagrafica.Indirizzo" class="form-label"></label>
+					<input id="indirizzo" asp-for="Verbale.Anagrafica.Indirizzo" class="form-control" />
+					<span class="text-danger" asp-validation-for="Verbale.Anagrafica.Indirizzo"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="citta" asp-for="Verbale.Anagrafica.Citta" class="form-label"></label>
+					<input id="citta" asp-for="Verbale.Anagrafica.Citta" class="form-control" />
+					<span class="text-danger" asp-validation-for="Verbale.Anagrafica.Citta"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="cap" asp-for="Verbale.Anagrafica.Cap" class="form-label"></label>
+					<input id="cap" asp-for="Verbale.Anagrafica.Cap" class="form-control" />
+					<span class="text-danger" asp-validation-for="Verbale.Anagrafica.Cap"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="codfisc" asp-for="Verbale.Anagrafica.CodFisc" class="form-label"></label>
+					<input id="codfisc" asp-for="Verbale.Anagrafica.CodFisc" class="form-control" />
+					<span class="text-danger" asp-validation-for="Verbale.Anagrafica.CodFisc"></span>
+				</div>
+
+				<div class="m-2 text-end">
+					<button class="btn btn-sm btn-success" type="submit">Salva Dati</button>
+					<button class="btn btn-sm btn-warning" type="reset">Reset</button>
+				</div>
+			</div>
+		</div>
+		<div>
+			<h2>Dichiarazione Verbale</h2>
+			<div>
+				<div class="formGroup">
+					<label for="nominativoAgente" asp-for="Verbale.NominativoAgente" class="form-label"></label>
+					<input id="nominativoAgente" asp-for="Verbale.NominativoAgente" class="form-control" />
+					<span class="text-danger" asp-validation-for="Verbale.NominativoAgente"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="dataTrascrizione" asp-for="Verbale.DataTrascrizioneVerbale" class="form-label"></label>
+					<input id="dataTrascrizione" asp-for="Verbale.DataTrascrizioneVerbale" />
+					<span class="text-danger" asp-validation-for="Verbale.DataTrascrizioneVerbale"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="violazione" asp-for="Verbale.Violazione.Descrizione" class="form-label"></label>
+					@* <input id="violazione" asp-for="Verbale.Violazione.Descrizione" class="form-control" type="number" /> *@
+					<select asp-for="Verbale.Violazione.Idviolazione" asp-items="@(new SelectList(violazioni, "Idviolazione", "Descrizione" ))"></select>
+					<span class="text-danger" asp-validation-for="Verbale.Violazione.Descrizione"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="indirizzoViolazione" asp-for="Verbale.IndirizzoViolazione" class="form-label"></label>
+					<input id="indirizzoViolazione" asp-for="Verbale.IndirizzoViolazione" class="form-control" />
+					<span class="text-danger" asp-validation-for="Verbale.IndirizzoViolazione"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="dataViolazione" asp-for="Verbale.DataViolazione" class="form-label"></label>
+					<input id="dataViolazione" asp-for="Verbale.DataViolazione" />
+					<span class="text-danger" asp-validation-for="Verbale.DataViolazione"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="importo" asp-for="Verbale.Importo" class="form-label"></label>
+					<input id="importo" asp-for="Verbale.Importo" type="number" />
+					<span class="text-danger" asp-validation-for="Verbale.Importo"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="decurtamento" asp-for="Verbale.DecurtamentoPunti" class="form-label"></label>
+					<input id="decurtamento" asp-for="Verbale.DecurtamentoPunti" type="number" />
+					<span class="text-danger" asp-validation-for="Verbale.DecurtamentoPunti"></span>
+				</div>
+
+				<div class="formGroup">
+					<label for="contestabile" asp-for="Verbale.Constestabile" class="form-label"></label>
+					<input id="contestabile" asp-for="Verbale.Constestabile" type="checkbox" />
+					<span class="text-danger" asp-validation-for="Verbale.Constestabile"></span>
+				</div>
+
+				<div class="m-2 text-end">
+					<button class="btn btn-sm btn-success" type="submit">Salva Verbale</button>
+					<button class="btn btn-sm btn-warning" type="reset">Reset</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
