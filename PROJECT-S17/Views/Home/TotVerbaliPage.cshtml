@@ -1,0 +1,30 @@
+﻿@model TotVerbaliViewModel
+@{
+	ViewData["Title"] = "Totale Verbali";
+}
+
+<div class="container">
+	<h1>TOTALE VERBALI PER TRASGRESSORE</h1>
+
+	<table class="table table-bordered table-hover table-striped">
+		<thead class="thead-dark">
+			<tr class="text-center centroTab">
+				<th>Nominativo Trasgressore</th>
+				<th>Indirizzo</th>
+				<th>Citta</th>
+				<th>Totale Verbali</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var verbale in Model.TotVerbali!)
+			{
+				<tr class="centroTab">
+					<td>@verbale.Nome @verbale.Cognome</td>
+					<td>@verbale.Indirizzo</td>
+					<td>@verbale.Citta</td>
+					<td>@verbale.VerbaliTotali</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

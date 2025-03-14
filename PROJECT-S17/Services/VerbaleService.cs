@@ -26,6 +26,22 @@ namespace PROJECT_S17.Services
             }
         }
 
+        public async Task<IndexViewModel> GetAllVerbali()
+        {
+            try
+            {
+                var verbaliList = new IndexViewModel();
+
+                verbaliList.Verbali = await _context.Verbale.OrderBy(v=> v.Idverbale).Include(v=> v.Anagrafica).Include(v=> v.Violazione).ToListAsync();
+
+                return verbaliList;
+            }
+            catch
+            {
+                return new IndexViewModel() { Verbali = new List<Verbale>() };
+            }
+        }
+
         public async Task<List<Violazione>> GetViolazioni()
         {
             try
@@ -80,6 +96,98 @@ namespace PROJECT_S17.Services
             _context.Verbale.Add(newViolazione);
 
             return await SaveAsync();
+        }
+
+
+        //task per i vari filtri
+
+        public async Task<IndexViewModel> contestabiliFilter()
+        {
+            try
+            {
+                var verbali = new IndexViewModel();
+                verbali.Verbali = await _context.Verbale.OrderBy(v => v.Idverbale).Include(v => v.Anagrafica).Include(v => v.Violazione).Where(v => v.Constestabile == true).ToListAsync();
+
+                return verbali;
+            }
+            catch
+            {
+                return new IndexViewModel() { Verbali = new List<Verbale>() };
+            }
+        }
+
+        public async Task<IndexViewModel> DecurtazioniFilter()
+        {
+            try
+            {
+                var verbali = new IndexViewModel();
+                verbali.Verbali = await _context.Verbale.OrderBy(v => v.Idverbale).Include(v => v.Anagrafica).Include(v => v.Violazione).Where(v => v.DecurtamentoPunti >= 3).ToListAsync();
+
+                return verbali;
+            }
+            catch
+            {
+                return new IndexViewModel() { Verbali = new List<Verbale>() };
+            }
+        }
+
+        public async Task<IndexViewModel> ImportoFilter()
+        {
+            try
+            {
+                var verbali = new IndexViewModel();
+                verbali.Verbali = await _context.Verbale.OrderBy(v => v.Idverbale).Include(v => v.Anagrafica).Include(v => v.Violazione).Where(v => v.Importo >= 200).ToListAsync();
+                
+                return verbali;
+            }
+            catch
+            {
+                return new IndexViewModel() { Verbali = new List<Verbale>() };
+            }
+        }
+
+        public async Task<TotVerbaliViewModel> GetTotVerbaliAsync()
+        {
+            try
+            {
+                var totVerbali = new TotVerbaliViewModel();
+                totVerbali.TotVerbali = await _context.Verbale.Include(v=> v.Anagrafica).GroupBy(v=> v.Idanagrafica).Select(g=> new TotVerbali()
+                {
+                    Nome = g.FirstOrDefault().Anagrafica.Nome,
+                    Cognome = g.FirstOrDefault().Anagrafica.Cognome,
+                    Indirizzo = g.FirstOrDefault().Anagrafica.Indirizzo,
+                    Citta = g.FirstOrDefault().Anagrafica.Citta,
+                    VerbaliTotali = g.Select(v=> v.Idverbale).Distinct().Count()
+                }).ToListAsync();
+
+                return totVerbali;
+            }
+            catch
+            {
+                return new TotVerbaliViewModel() { TotVerbali = new List<TotVerbali>() };
+            }
+        }
+
+        public async Task<TotDecurtazioniViewModel> GetTotDecurtazioniAsync()
+        {
+            try
+            {
+                var totDecurtazioni = new TotDecurtazioniViewModel();
+                totDecurtazioni.TotDecurtazioni = await _context.Verbale.Include(v => v.Anagrafica).GroupBy(v => v.Idanagrafica).Select(g => new TotDecurtazioni()
+                {
+                    Nome = g.FirstOrDefault().Anagrafica.Nome,
+                    Cognome = g.FirstOrDefault().Anagrafica.Cognome,
+                    Indirizzo = g.FirstOrDefault().Anagrafica.Indirizzo,
+                    Citta = g.FirstOrDefault().Anagrafica.Citta,
+                    DecurtazioniTotali = g.GroupBy(v=> v.Idverbale).Select(g=> g.FirstOrDefault().DecurtamentoPunti).Sum() //sono fiero di questa espressione lambda
+                }).ToListAsync();
+
+                return totDecurtazioni;
+            }
+            catch
+            {
+                return new TotDecurtazioniViewModel() { TotDecurtazioni = new List<TotDecurtazioni>() };
+            }
         }
     }
 }

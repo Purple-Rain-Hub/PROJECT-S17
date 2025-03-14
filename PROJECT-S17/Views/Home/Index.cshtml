@@ -1,6 +1,48 @@
-﻿@{
-    ViewData["Title"] = "Polizia Municipale";
+﻿@model IndexViewModel
+@{
+	ViewData["Title"] = "Polizia Municipale";
 }
 
-<h1>Benvenuto Agente</h1>
+<div class="container">
+	<h1>GESTIONE VERBALI</h1>
 
+	<h6 class="d-inline">Filtri: </h6>
+	<form method="post" asp-controller="Home" asp-action="Index" class="d-inline">
+		<select name="selectFilter" class="d-inline" onchange="this.form.submit()">
+			<option value="">--Seleziona filtro--</option>
+			<option value=0>Tutti i Verbali</option>
+			<option value=1>Verbali Contestabili</option>
+			<option value=2>Decurtazioni Elevate</option>
+			<option value=3>Importi Dovuti Elevati</option>
+		</select>
+	</form>
+
+	<table class="table table-bordered table-hover table-striped">
+		<thead class="thead-dark">
+			<tr class="text-center centroTab">
+				<th>Id</th>
+				<th>Violazione</th>
+				<th>Nominativo Trasgressore</th>
+				<th>Data Violazione</th>
+				<th>Indirizzo Violazione</th>
+				<th>Importo Dovuto</th>
+				<th>Punti Decurtati</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var verbale in Model.Verbali!)
+			{
+				<tr class="centroTab">
+					<td>@verbale.Idverbale</td>
+					<td>@verbale.Violazione.Descrizione</td>
+					<td>@verbale.Anagrafica.Nome @verbale.Anagrafica.Cognome</td>
+					<td>@verbale.DataViolazione</td>
+					<td>@verbale.IndirizzoViolazione</td>
+					<td>@verbale.Importo.ToString("F2") €</td>
+					<td>@verbale.DecurtamentoPunti</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

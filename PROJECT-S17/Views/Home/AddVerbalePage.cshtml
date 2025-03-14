@@ -6,6 +6,10 @@
 
 <div class="container">
 	<h1>Aggiungi un verbale</h1>
+	@if (TempData["Error"] != null)
+	{
+		<span class="text-danger">@TempData["Error"]</span>
+	}
 	<form method="post" asp-controller="Home" asp-action="SaveVerbale">
 		<div>
 			<h2>Dati Anagrafici</h2>
